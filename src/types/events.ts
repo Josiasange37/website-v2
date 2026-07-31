@@ -47,6 +47,7 @@ export interface EventItem {
   for_community: EventCommunity;
   title: string;
   slug: string;
+  created_by?: string;
   description: string;
   location_data: EventLocation | null;
   date: string; // ISO datetime

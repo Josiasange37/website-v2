@@ -1,9 +1,9 @@
 "use client";
 
-import type { IconType } from 'react-icons';
-import Link from 'next/link';
-import Image from 'next/image';
-import { MotionConfig, motion } from 'framer-motion';
+import type { IconType } from "react-icons";
+import Link from "next/link";
+import Image from "next/image";
+import { MotionConfig, motion } from "framer-motion";
 import {
   HiOutlineArrowLeft,
   HiOutlineCalendarDays,
@@ -12,32 +12,39 @@ import {
   HiOutlineGlobeAlt,
   HiOutlineMapPin,
   HiOutlineTag,
-} from 'react-icons/hi2';
-import { useEvent } from '@/hooks/useEvent';
-import { useAuth } from '@/components/contexts/auth-context';
-import { Badge } from '@/components/layout';
-import { PageNotFound } from '@/components';
-import { EventSpeakers, EventRegisterButton } from '@/components/pages/Event-Page-Components';
-import { EventCommunity, EventType } from '@/types/events';
-import { cn } from '@/utils/constants';
+} from "react-icons/hi2";
+import { useEvent } from "@/hooks/useEvent";
+import { useAuth } from "@/components/contexts/auth-context";
+import { Badge } from "@/components/layout";
+import { PageNotFound } from "@/components";
+import {
+  EventSpeakers,
+  EventRegisterButton,
+} from "@/components/pages/Event-Page-Components";
+import { EventCommunity, EventType } from "@/types/events";
+import { cn } from "@/utils/constants";
 
-const PLACEHOLDER_THUMBNAIL = 'https://placehold.co/1920x1080';
+const PLACEHOLDER_THUMBNAIL = "https://placehold.co/1920x1080";
 
 const communityBadgeStyles: Record<EventCommunity, string> = {
-  'Django Cameroon': 'bg-primary text-white',
-  'Django Girls Cameroon': 'bg-secondary text-white',
+  "Django Cameroon": "bg-primary text-white",
+  "Django Girls Cameroon": "bg-secondary text-white",
 };
 
 const typeMeta: Record<EventType, { icon: IconType; label: string }> = {
-  Online: { icon: HiOutlineGlobeAlt, label: 'Online' },
-  'In-person': { icon: HiOutlineMapPin, label: 'In-person' },
-  Hybrid: { icon: HiOutlineComputerDesktop, label: 'Hybrid' },
+  Online: { icon: HiOutlineGlobeAlt, label: "Online" },
+  "In-person": { icon: HiOutlineMapPin, label: "In-person" },
+  Hybrid: { icon: HiOutlineComputerDesktop, label: "Hybrid" },
 };
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
-  show: (delay = 0) => ({ opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE, delay } }),
+  show: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: EASE, delay },
+  }),
 };
 
 const EventDetailSkeleton = () => (
@@ -61,7 +68,7 @@ const EventDetailSkeleton = () => (
 
 const EventDetailClient = ({ id }: { id: string }) => {
   const { event, loading, error } = useEvent(id);
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { isAuthenticated, isLoading: authLoading, user } = useAuth();
 
   if (loading || authLoading) {
     return <EventDetailSkeleton />;
@@ -75,12 +82,20 @@ const EventDetailClient = ({ id }: { id: string }) => {
     return <PageNotFound />;
   }
 
+  if (!event.published && !!event.created_by) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const shouldThrowNotFound = emailRegex.test(event.created_by)
+      ? user?.email !== event.created_by
+      : user?.username !== event.created_by;
+    if (shouldThrowNotFound) return <PageNotFound />;
+  }
+
   const TypeIcon = typeMeta[event.type].icon;
   const thumbnailSrc = event.thumbnail || PLACEHOLDER_THUMBNAIL;
   const locationLabel = event.location_data
     ? `${event.location_data.name}, ${event.location_data.city.name}, ${event.location_data.city.region.name}`
-    : event.type === 'Online'
-      ? 'Online — link shared after registration'
+    : event.type === "Online"
+      ? "Online — link shared after registration"
       : null;
 
   return (
@@ -102,7 +117,9 @@ const EventDetailClient = ({ id }: { id: string }) => {
             className="absolute max-sm:hidden flex items-center gap-2 rounded-full border border-white/25 bg-black/30 px-4 py-2 text-white backdrop-blur-sm transition-colors duration-200 hover:bg-black/50 sm:left-6 sm:top-24"
           >
             <HiOutlineArrowLeft className="size-4" />
-            <span className="urbanist-font text-sm font-semibold">Back to events</span>
+            <span className="urbanist-font text-sm font-semibold">
+              Back to events
+            </span>
           </Link>
 
           <motion.div
@@ -113,8 +130,8 @@ const EventDetailClient = ({ id }: { id: string }) => {
           >
             <span
               className={cn(
-                'inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold urbanist-font',
-                communityBadgeStyles[event.for_community]
+                "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold urbanist-font",
+                communityBadgeStyles[event.for_community],
               )}
             >
               {event.for_community}
@@ -134,14 +151,19 @@ const EventDetailClient = ({ id }: { id: string }) => {
           {!event.published && (
             <div className="mb-6 flex items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-800 urbanist-font">
               <HiOutlineEyeSlash className="size-4 shrink-0" />
-              This event isn&apos;t published yet — it&apos;s only visible to you.
+              This event isn&apos;t published yet — it&apos;s only visible to
+              you.
             </div>
           )}
 
           {event.tags_list.length > 0 && (
             <div className="flex gap-2.5 mb-6 flex-wrap">
               {event.tags_list.map((tag) => (
-                <Badge key={tag} backgroundColor="bg-[#D9E7FF]" className="text-secondary rounded-[10px]">
+                <Badge
+                  key={tag}
+                  backgroundColor="bg-[#D9E7FF]"
+                  className="text-secondary rounded-[10px]"
+                >
                   {tag}
                 </Badge>
               ))}
@@ -160,10 +182,13 @@ const EventDetailClient = ({ id }: { id: string }) => {
 
           <div className="flex max-md:flex-col gap-x-8 max-md:gap-y-3 py-4 border-y border-dark/10 mb-8 urbanist-font text-dark">
             <span className="flex items-center gap-2">
-              <HiOutlineCalendarDays size={20} className="shrink-0 text-primary" />
+              <HiOutlineCalendarDays
+                size={20}
+                className="shrink-0 text-primary"
+              />
               {new Date(event.date).toLocaleString(undefined, {
-                dateStyle: 'medium',
-                timeStyle: 'short',
+                dateStyle: "medium",
+                timeStyle: "short",
               })}
             </span>
             {locationLabel && (
@@ -182,14 +207,14 @@ const EventDetailClient = ({ id }: { id: string }) => {
             {event.description}
           </p>
 
-          {
-            (event.date && new Date(event.date) < new Date()) ? (
-              <div className="mb-6 flex items-center gap-2 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 urbanist-font">
-                <HiOutlineEyeSlash className="size-4 shrink-0" />
-                This event has already taken place.
-              </div>
-            ) : (<EventRegisterButton eventId={event.id} />)
-          }
+          {event.date && new Date(event.date) < new Date() ? (
+            <div className="mb-6 flex items-center gap-2 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 urbanist-font">
+              <HiOutlineEyeSlash className="size-4 shrink-0" />
+              This event has already taken place.
+            </div>
+          ) : (
+            <EventRegisterButton eventId={event.id} />
+          )}
           <EventSpeakers speakers={event.speakers_data} />
         </main>
       </div>
