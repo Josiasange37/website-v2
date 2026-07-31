@@ -96,10 +96,7 @@ const ForgotPasswordClient = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const EmailSchema = z.object({
-        email: z
-            .string()
-            .min(1, tc('required'))
-            .email(tc('invalidEmail')),
+        email: z.email(tc('invalidEmail')).nonempty(tc('required')),
     });
 
     const ResetPasswordSchema = z

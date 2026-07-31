@@ -27,12 +27,7 @@ const LoginClient = () => {
 		emailOrUsername: z.string().min(1, tc("required")),
 		password: z
 			.string()
-			.min(1, tc("required"))
-			.min(8, tc("passwordTooShort"))
-			.regex(
-				/^(?=.*?[A-Z])(?=(.*[a-z]){1,})(?=(.*[\d]){1,})(?=(.*[\W]){1,})(?!.*\s).{8,}$/, 
-				tc("passwordStrong")
-			),
+			.min(1, tc("required")),
 		remember_me: z.boolean().optional(),
 	});
 
@@ -47,7 +42,7 @@ const LoginClient = () => {
 	} = useForm<ILoginForm>({
 		resolver: zodResolver(loginFormSchema),
 		defaultValues: {
-			remember_me: false,
+			remember_me: true,
 		},
 	});
 
