@@ -22,7 +22,16 @@ async function fetchJson(url: string) {
 
 // Some blog/event slugs in the DB carry a leading slash — strip it so we
 // don't emit double-slash URLs like /blog//my-test-blog-1.
-const normalizeSlug = (slug: string) => slug.replace(/^\/+/, "");
+// Slugs can also contain raw characters (&, spaces, quotes, etc.) that are
+// valid in a URL path but break XML when dropped into <loc> unescaped — this
+// Next.js build does not XML-escape sitemap entries itself, so percent-encode
+// each segment ourselves.
+const normalizeSlug = (slug: string) =>
+  slug
+    .replace(/^\/+/, "")
+    .split("/")
+    .map(encodeURIComponent)
+    .join("/");
 
 async function getPublishedBlogSlugs(): Promise<string[]> {
   const slugs: string[] = [];
