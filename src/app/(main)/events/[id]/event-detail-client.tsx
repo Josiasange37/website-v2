@@ -23,6 +23,7 @@ import {
 } from "@/components/pages/Event-Page-Components";
 import { EventCommunity, EventType } from "@/types/events";
 import { cn } from "@/utils/constants";
+import { useRouter } from "next/navigation";
 
 const PLACEHOLDER_THUMBNAIL = "https://placehold.co/1920x1080";
 
@@ -69,6 +70,7 @@ const EventDetailSkeleton = () => (
 const EventDetailClient = ({ id }: { id: string }) => {
   const { event, loading, error } = useEvent(id);
   const { isAuthenticated, isLoading: authLoading, user } = useAuth();
+  const router = useRouter();
 
   if (loading || authLoading) {
     return <EventDetailSkeleton />;
@@ -88,6 +90,11 @@ const EventDetailClient = ({ id }: { id: string }) => {
       ? user?.email !== event.created_by
       : user?.username !== event.created_by;
     if (shouldThrowNotFound) return <PageNotFound />;
+  }
+
+  if (!!event.external_registration_link) {
+    router.replace(event.external_registration_link);
+    return null;
   }
 
   const TypeIcon = typeMeta[event.type].icon;

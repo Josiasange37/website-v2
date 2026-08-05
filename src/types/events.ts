@@ -45,6 +45,7 @@ export interface EventItem {
   id: string;
   category: EventCategory;
   for_community: EventCommunity;
+  external_registration_link?: string;
   title: string;
   slug: string;
   created_by?: string;

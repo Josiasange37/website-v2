@@ -41,6 +41,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
         'group flex h-full w-full max-w-96 shrink-0 flex-col overflow-hidden rounded-[30px] border-[1.5px] border-primary shadow-outline shadow-xl transition-transform duration-300 hover:-translate-y-1',
         className
       )}
+      id={`event-card-${event.slug}`}
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-primary">
         {event.thumbnail ? (
@@ -86,7 +87,7 @@ const EventCard = ({ event, className }: EventCardProps) => {
         </span>
 
         <Link
-          href={`/events/${event.slug}`}
+          href={event.external_registration_link ?? `/events/${event.slug}`}
           className="mt-auto flex w-fit items-center gap-x-2 py-1 text-xl font-medium text-secondary urbanist-font transition-colors duration-200 hover:text-secondary/80"
         >
           {t('viewEvent')}
