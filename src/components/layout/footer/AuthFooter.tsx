@@ -17,7 +17,6 @@ const AuthFooter = () => {
   const pathname = usePathname();
   const showAuthComponent = ['/auth/login', '/auth/register'].includes(pathname);
   const currentYear = new Date().getFullYear();
-  const yearRange = currentYear > 2021 ? `2021-${currentYear}` : '2021';
 
   return (
     <div className={cn("flex bg-transparent flex-col md:flex-row gap-x-2 gap-y-5 py-4 justify-between items-center w-full lg:w-[85%] lg:mx-auto border-t border-t-white border-gray-800", {
@@ -29,7 +28,7 @@ const AuthFooter = () => {
     })} />
       </div>
       <div className="text-lg md:text-base text-center md:text-left  text-opacity-80 urbanist-font">
-        <span className="urbanist-font"> {tc("footer.copyright", { yearRange })}</span>
+        <span className="urbanist-font"> {tc("footer.copyright", { currentYear })}</span>
         <Link className="block urbanist-font" href="/">
           {" "}
           {tc("footer.termsPrivacy")}

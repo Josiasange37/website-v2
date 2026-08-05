@@ -17,7 +17,6 @@ const Footer = () => {
   const pathname = usePathname();
   const isAuthRoute = pathname.includes('/auth');
   const currentYear = new Date().getFullYear();
-  const yearRange = currentYear > 2021 ? `2021-${currentYear}` : '2021';
 
   return (
     <div className={`${isAuthRoute ? 'hidden' : 'block'} flex bg-transparent flex-col md:flex-row gap-2 py-4 justify-between items-center w-full lg:w-[85%] lg:mx-auto border-t-2 border-gray-800`}>
@@ -25,7 +24,7 @@ const Footer = () => {
         <Image src={HomeImages.Logo} alt='logo image' className='w-36 h-16 dark:invert dark:brightness-0' />
       </Link>
       <div className='text-lg md:text-base text-center md:text-left  text-opacity-80 urbanist-font'>
-        <span className='urbanist-font'> {tc("footer.copyright", { yearRange })}</span>
+        <span className='urbanist-font'> {tc("footer.copyright", { currentYear })}</span>
         <Link className='block urbanist-font' href='/'>
           {' '}
           {tc("footer.termsPrivacy")}

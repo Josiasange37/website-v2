@@ -29,7 +29,7 @@
     "clearSearch": "Clear search",
     "readMore": "Read more",
     "footer": {
-      "copyright": "© {yearRange} • Django Cameroon • All rights reserved",
+      "copyright": "© {currentYear} Django Cameroon • All rights reserved",
       "termsPrivacy": "Terms of use & Privacy Policy",
       "credits": "Credits",
       "faqs": "FAQs"
