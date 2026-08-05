@@ -378,5 +378,26 @@
       "showing": "Showing {from} - {to} of {total}",
       "button": "Load more projects"
     }
+  },
+  "CreditsPage": {
+    "header": {
+      "eyebrow": "Behind the scenes",
+      "title": "Credits",
+      "description": "This site is a community effort. Here's who built it, what it's built with, and how you can help make it better."
+    },
+    "webTeam": {
+      "title": "Crafted by the community",
+      "body": "This website is built and maintained by volunteers from Django Cameroon. See everyone who has contributed code on GitHub.",
+      "cta": "View contributors"
+    },
+    "techStack": {
+      "title": "Built with",
+      "body": "Powered by these open-source tools and frameworks."
+    },
+    "openSource": {
+      "title": "Open source",
+      "body": "The source code for this website is public. Found a bug or want to add a feature? Contributions are welcome.",
+      "cta": "View source on GitHub"
+    }
   }
 }

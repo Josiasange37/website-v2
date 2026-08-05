@@ -12,6 +12,7 @@ const STATIC_ROUTES: MetadataRoute.Sitemap = [
   { url: `${SITE_URL}/blog`, changeFrequency: "daily", priority: 0.8 },
   { url: `${SITE_URL}/events`, changeFrequency: "daily", priority: 0.8 },
   { url: `${SITE_URL}/projects`, changeFrequency: "monthly", priority: 0.6 },
+  { url: `${SITE_URL}/credits`, changeFrequency: "monthly", priority: 0.3 },
 ];
 
 async function fetchJson(url: string) {

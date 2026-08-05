@@ -372,5 +372,26 @@
       "showing": "Affichage de {from} - {to} sur {total}",
       "button": "Charger plus de projets"
     }
+  },
+  "CreditsPage": {
+    "header": {
+      "eyebrow": "Dans les coulisses",
+      "title": "Crédits",
+      "description": "Ce site est le fruit d'un effort communautaire. Voici qui l'a construit, avec quoi il a été construit, et comment vous pouvez aider à l'améliorer."
+    },
+    "webTeam": {
+      "title": "Conçu par la communauté",
+      "body": "Ce site est construit et maintenu par des bénévoles de Django Cameroon. Découvrez toutes les personnes ayant contribué au code sur GitHub.",
+      "cta": "Voir les contributeurs"
+    },
+    "techStack": {
+      "title": "Construit avec",
+      "body": "Propulsé par ces outils et frameworks open source."
+    },
+    "openSource": {
+      "title": "Open source",
+      "body": "Le code source de ce site est public. Vous avez trouvé un bug ou souhaitez ajouter une fonctionnalité ? Les contributions sont les bienvenues.",
+      "cta": "Voir le code source sur GitHub"
+    }
   }
 }
